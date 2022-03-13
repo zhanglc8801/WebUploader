@@ -1,0 +1,374 @@
+/* ----------------Reset Css--------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+    -webkit-text-size-adjust: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    font-family: arial, sans-serif;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ------------ */
+
+#container {
+    border: 0px solid #dadada;
+    color: #838383;
+    font-size: 12px;
+    background-color: #FFF;
+}
+
+.element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+
+#uploader .webuploader-pick {
+    font-size: 18px;
+    background: #00b7ee;
+    border-radius: 3px;
+    line-height: 32px;
+    padding: 0 10px;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#uploader .webuploader-pick-hover {
+    background: #00a2d4;
+}
+
+#uploader .flashTip {
+    color: #666666;
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 20px;
+}
+
+#uploader .flashTip a {
+    color: #0785d1;
+    text-decoration: none;
+}
+
+#uploader .flashTip a:hover {
+    text-decoration: underline;
+}
+
+
+#uploader .filelist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#uploader .filelist:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+}
+
+#uploader .filelist li {
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    margin: 0 8px 5px 0;
+    position: relative;
+/*    display: inline;
+    float: left;*/
+    overflow: hidden;
+    font-size: 12px;
+    border: 1px solid #efefef;
+}
+
+#uploader .filelist li p.log {
+    position: relative;
+    top: -45px;
+}
+
+#uploader .filelist li p.title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    z-index: 100;
+}
+
+#uploader .filelist li p.progress {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 8px;
+    overflow: hidden;
+    z-index: 50;
+}
+
+#uploader .filelist li p.progress span {
+    display: none;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    background: #1483d8 url(./progress.png) repeat-x;
+    -webit-transition: width 200ms linear;
+    -moz-transition: width 200ms linear;
+    -o-transition: width 200ms linear;
+    -ms-transition: width 200ms linear;
+    transition: width 200ms linear;
+    -webkit-animation: progressmove 2s linear infinite;
+    -moz-animation: progressmove 2s linear infinite;
+    -o-animation: progressmove 2s linear infinite;
+    -ms-animation: progressmove 2s linear infinite;
+    animation: progressmove 2s linear infinite;
+    -webkit-transform: translateZ(0);
+    color:#ffffff;
+    font-size:10px;
+    line-height:10px;
+}
+
+
+#uploader .filelist li p.progress_check {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 16px;
+    overflow: hidden;
+    z-index: 50;
+    text-align: left;
+    color: #aaa;
+}
+
+#uploader .filelist li p.progress_check span {
+    background: none;
+}
+
+@-webkit-keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+@-moz-keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+@keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+#uploader .filelist li img {
+    width: 100%;
+}
+
+#uploader .filelist li p.error {
+    background: #f43838;
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 16px;
+    line-height: 16px;
+    width: 100%;
+    z-index: 100;
+}
+
+#uploader .filelist li .success {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    z-index: 200;
+    background: url(./success.png) no-repeat right bottom;
+}
+
+#uploader .filelist div.file-panel {
+    position: absolute;
+    height: 0;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
+    background: rgba( 0, 0, 0, 0.5 );
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 300;
+}
+
+#uploader .filelist div.file-panel span {
+    width: 24px;
+    height: 24px;
+    display: inline;
+    float: right;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: url(./icons.png) no-repeat;
+    margin: 5px 1px 1px;
+    cursor: pointer;
+}
+
+#uploader .filelist div.file-panel span.rotateLeft {
+    background-position: 0 -24px;
+}
+
+#uploader .filelist div.file-panel span.rotateLeft:hover {
+    background-position: 0 0;
+}
+
+#uploader .filelist div.file-panel span.rotateRight {
+    background-position: -24px -24px;
+}
+
+#uploader .filelist div.file-panel span.rotateRight:hover {
+    background-position: -24px 0;
+}
+
+#uploader .filelist div.file-panel span.cancel {
+    background-position: -48px -24px;
+}
+
+#uploader .filelist div.file-panel span.cancel:hover {
+    background-position: -48px 0;
+}
+
+#uploader .statusBar {
+    height: 63px;
+    border-top: 0px solid #dadada;
+    padding: 0 20px;
+    line-height: 63px;
+    vertical-align: middle;
+    position: relative;
+}
+
+
+#filePicker2 {
+    display: inline-block;
+    float: left;
+}
+
+#uploader .queueList .webuploader-pick {
+    background: #00b7ee;
+    border: 0px solid #cfcfcf;
+    color: #ffffff;
+    padding: 0 10px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 0px;
+    cursor: pointer;
+    font-size: 14px;
+    float: left;
+}
+
+#uploader .queueList .webuploader-pick-hover {
+    background: #00a2d4;
+}
+
+#uploader .queueList .uploadBtn.state-uploading {
+
+}
+
+#uploader .queueList .uploadBtn.state-uploading:hover {
+    
+}
+
+#uploader .queueList .uploadBtn.state-paused {
+    color: red;
+}
+
+#uploader .queueList .uploadBtn.state-paused:hover {
+    color: red;
+}
+
+
+#uploader .queueList .uploadBtn {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 10px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 0px;
+    cursor: pointer;
+    font-size: 14px;
+    float: left;
+    line-height: 30px;
+}
+
+#uploader .queueList .uploadBtn:hover {
+    background: #f0f0f0;
+}
+
+#uploader .queueList .uploadBtn.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}

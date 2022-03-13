@@ -1,0 +1,201 @@
+/* ----------------Reset Css--------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+    -webkit-text-size-adjust: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    font-family: arial, sans-serif;
+}
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+
+    #uploader .placeholder .webuploader-pick {
+        font-size: 18px;
+        background: #00b7ee;
+        border-radius: 3px;
+        line-height: 44px;
+        padding: 0 30px;
+        color: #fff;
+        display: inline-block;
+        margin: 20px auto;
+        cursor: pointer;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    #uploader .placeholder .webuploader-pick-hover {
+        background: #00a2d4;
+    }
+
+
+
+
+#uploader div.title {
+    overflow: hidden;
+    line-height: 30px;
+    margin-left: 15px;
+}
+
+#uploader p.progress {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 10px;
+    overflow: hidden;
+    z-index: 50;
+}
+
+p.progress span {
+    /*display: none;*/
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    background: #1483d8 url(./progress.png) repeat-x;
+    -webit-transition: width 200ms linear;
+    -moz-transition: width 200ms linear;
+    -o-transition: width 200ms linear;
+    -ms-transition: width 200ms linear;
+    transition: width 200ms linear;
+    -webkit-animation: progressmove 2s linear infinite;
+    -moz-animation: progressmove 2s linear infinite;
+    -o-animation: progressmove 2s linear infinite;
+    -ms-animation: progressmove 2s linear infinite;
+    animation: progressmove 2s linear infinite;
+    -webkit-transform: translateZ(0);
+    line-height: 10px;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+#uploader .filelist li p.progress_check {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 16px;
+    overflow: hidden;
+    z-index: 50;
+    text-align: left;
+    color: #aaa;
+    
+}
+
+    #uploader .filelist li p.progress_check span {
+        background: none;
+    }
+
+@-webkit-keyframes progressmove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 17px 0;
+    }
+}
+
+
+
+#uploader div.file-panel {
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
+    background: rgba( 0, 0, 0, 0.5 );
+    overflow: hidden;
+    z-index: 300;
+}
+
+    #uploader div.file-panel span {
+        width: 24px;
+        height: 24px;
+        display: inline;
+        float: right;
+        text-indent: -9999px;
+        overflow: hidden;
+        background: url(./icons.png) no-repeat;
+        margin: 5px 1px 1px;
+        cursor: pointer;
+    }
+
+    #uploader .progress span.percentage {
+        width: 0;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: #1483d8;
+        position: absolute;
+    }
+
+    #uploader .progress span.text {
+        position: relative;
+        z-index: 10;
+    }
+
+#uploader .uploadBtn,
+#uploader .uploadBtn.state-uploading,
+#uploader .uploadBtn.state-paused {
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #565656;
+    padding: 0 18px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    float: left;
+}
+
+    #uploader .uploadBtn:hover,
+    #uploader .uploadBtn.state-uploading:hover,
+    #uploader .uploadBtn.state-paused:hover {
+        background: #f0f0f0;
+    }
+
+#uploader .uploadBtn {
+    border-color: #ccc;
+    cursor: pointer;
+    background: #fff;
+    padding: 5px 8px;
+    color: #333;
+    text-align: center;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+    #uploader .uploadBtn:hover {
+        color: #333;
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+
+    #uploader .uploadBtn.disabled {
+        pointer-events: none;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }

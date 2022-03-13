@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Index</h2>
+<script src="~/lib/jquery-1.10.2.js"></script>
+
+<div id="uploader" class="wu-example">
+    <!--用来存放文件信息-->
+    <div class="filename"></div>
+    <div class="state"></div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;min-width:2%">
+            0%
+        </div>
+    </div>
+    <div class="btns">
+        <div id="picker">选择文件</div>
+        <button id="ctlBtn" class="btn btn-default" disabled="disabled">开始上传</button>
+        <button id="pause" class="btn btn-danger" disabled="disabled">暂停上传</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //待上传文件的md5值（key为file.id）
+        var md5 = {};
+        // WebUploader提供的钩子（hook），在文件上传前先判断服务是否已存在这个文件
+        WebUploader.Uploader.register({
+          'before-send-file': 'beforeSendFile' //整个文件上传前
+        },
+        {
+            beforeSendFile: function (file) {
+                var that = this;
+                var deferred = WebUploader.Deferred();
+                //上传前请求服务端,判断文件是否已经上传过
+                $.post('@Url.Action("CheckFileExist")', { md5: md5[file.id] },
+                function(data){
+                    if (data == '1') {
+                        //跳过如果存在则跳过
+                        that.owner.skipFile( file );
+                        alert("文件已存在，无需上传！");
+                    }
+                    // 继续后面行为
+                    deferred.resolve();
+                });
+                return deferred.promise();
+            }
+        });
+
+        var GUID = WebUploader.Base.guid();//一个GUID
+        var uploader = WebUploader.create({
+            swf: '/lib/webuploader/Uploader.swf',
+            server: '@Url.Action("Upload")',
+            pick: '#picker',
+            resize: false,
+            //duplicate: true,//允许上传同一文件 https://my.oschina.net/zchuanzhao/blog/757311
+            chunked: true,//开始分片上传
+            chunkSize: 2048000,//每一片的大小
+            chunkRetry: 3,//网络问题上传失败后重试次数
+            threads: 1, //上传并发数
+            fileSizeLimit: 2000 * 1024 * 1024,//最大2GB
+            fileSingleSizeLimit: 2000 * 1024 * 1024,
+            resize: false, //不压缩
+            //选择文件类型
+            //accept: {
+            //    title: 'Video',
+            //    extensions: 'mp4,avi',
+            //    mimeTypes: 'video/*'
+            //},
+            formData: {
+                guid: GUID, //自定义参数，待会儿解释
+            }
+        });
+        uploader.on('fileQueued', function (file) {
+            $("#uploader .filename").html("文件名：" + file.name);
+            //$("#uploader .state").html('等待上传');
+            $("#uploader .progress-bar").width('0%');
+            $("#uploader .progress-bar").text('0%');
+            //$('#ctlBtn').removeAttr('disabled');//验证完成后再启用
+            $("#ctlBtn").text("开始上传");
+            //alert(md5value);
+
+            //获取MD5
+            md5[file.id] = '';
+            uploader.md5File(file)
+                // 及时显示进度
+                .progress(function (percentage) {
+                    $("#uploader .state").html('正在验证文件...'+parseInt(percentage * 100) + '%');
+                    //$("#uploader .progress-bar").width(percentage * 100 + '%');
+                    //$("#uploader .progress-bar").text(parseInt(percentage * 100) + '%');
+                })
+                // 完成
+                .then(function (val) {
+                    //alert(val);
+                    md5[file.id] = val;
+                    $("#uploader .state").html('验证完成,等待上传');
+                    $('#ctlBtn').removeAttr('disabled');
+                });
+
+        });
+
+        //文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+            $("#uploader .progress-bar").width(percentage * 100 + '%');
+            $("#uploader .progress-bar").text(parseInt(percentage * 100) + '%');
+        });
+
+        //发送前填充数据
+        uploader.on('uploadBeforeSend', function( block, data ) {
+            // block为分块数据。
+            
+            // file为分块对应的file对象。
+            var file = block.file;
+            var fileMd5 = md5[file.id];
+            // 修改data可以控制发送哪些携带数据。
+            console.info("fileName= "+file.name+" fileMd5= "+fileMd5+" fileId= "+file.id);
+            // 将存在file对象中的md5数据携带发送过去。
+            data.md5 = fileMd5;//md5
+            // 删除其他数据
+            // delete data.key;
+            if(block.chunks>1){ //文件大于chunksize 分片上传
+                data.isChunked = true;
+                console.info("data.isChunked= "+data.isChunked);
+            }else{
+                data.isChunked = false;
+                console.info("data.isChunked="+data.isChunked);
+            }
+
+        });
+
+
+        uploader.on('uploadSuccess', function (file, response) {
+            //response 由控制器中的Upload()返回
+            $.post('@Url.Action("Merge")', { guid: GUID, fileName: file.name, md5: md5[file.id] }, function (data) {
+                $("#uploader .progress-bar").removeClass('progress-bar-striped').removeClass('active').removeClass('progress-bar-info').addClass('progress-bar-success');
+                $("#uploader .state").html(file.name + "--上传成功...");
+
+                //alert(data.filepath);
+
+            });
+        });
+        uploader.on('uploadError', function () {
+            $("#uploader .progress-bar").removeClass('progress-bar-striped').removeClass('active').removeClass('progress-bar-info').addClass('progress-bar-danger');
+            $("#uploader .state").html("上传失败...");
+        });
+
+        $("#ctlBtn").click(function () {
+            uploader.upload();
+            $("#ctlBtn").text("上传中...");
+            $(this).attr('disabled', 'disabled');
+            $('#pause').removeAttr('disabled');
+            $("#uploader .progress-bar").addClass('progress-bar-striped').addClass('active');
+            $("#uploader .state").html("上传中...");
+        });
+        $('#pause').click(function () {
+            uploader.stop(true);
+            $('#ctlBtn').removeAttr('disabled');
+            $(this).attr('disabled', 'disabled');
+            $("#ctlBtn").text("继续上传");
+            $("#uploader .state").html("暂停中...");
+            $("#uploader .progress-bar").removeClass('progress-bar-striped').removeClass('active');
+        });
+    });
+
+</script>
+
+<link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
+<script src="~/lib/webuploader/webuploader-v0.1.6.js"></script>
